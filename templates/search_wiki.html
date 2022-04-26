@@ -1,0 +1,51 @@
+<style>
+#codeing_wiki_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr class="thead "> <th>제목</th><th>분류</th></tr>
+                        </thead>
+                        <tbody>
+                        <div id='content'>
+                        <h1>Search Result</h1>
+
+                        {%if message%}
+                                <b><i>{{message}}</i></b>
+                        {% else %}
+
+                            {% if search_wikis %}
+                                {% for post in search_wikis %}
+                                 <tr>
+                                    <td><a href="/wiki/detail/?wiki_id={{ post.wiki_id }}">{{post.wiki_title}}</td>
+                                    <td>{{post.wiki_kind}}</td>
+
+                                 </tr>
+                                {% endfor %}
+
+                            {% elif search_term %}
+                                <b><i>[{{search_term}}] 검색 결과가 없습니다. </i></b>
+                            {% endif %}c
+                        {% endif %}
+                    </div>
+
+                        </tbody>
+                    </table>
+                    {% if request.session.sessionid == None %}
+                    {% else %}
+                    <a href="/wiki/post" class="btn btn-primary">
+                        글쓰기
+                    </a>
+                     {% endif %}
+                    </div>
+            </nav>
+        </div>
+{% endblock %}

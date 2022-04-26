@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                   <form action="loginimpl" method="post">
+                        {% csrf_token %}
+                        ID <input class="form-control" type="text" name="id" required><br>
+                        PWD <input class="form-control" type="password" name="pwd" required><br>
+                        <input class="btn btn-success" type="submit" value="LOGIN">
+                    </form>
+                </div>
+            </nav>
+        </div>
+
+{% endblock %}

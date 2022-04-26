@@ -1,0 +1,48 @@
+<style>
+#codeing_wiki_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+                <div class="container">
+                    <form action="/wiki/wiki/p" method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="wiki_inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="wiki_title" class="form-control" maxlength = "50" id="wiki_inputTitle" autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="wiki_inputcat" class="col-sm-2 col-form-label"><strong>카테고리</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="kind" class="form-control" id="wiki_inputcat">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="wiki_inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="content" class="form-control" id="wiki_inputContent" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="wiki_inputModi" class="col-sm-2 col-form-label"><strong>수정내용</strong></label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="revi_content" class="form-control" id="wiki_inputModi" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto mr-auto"></div>
+                            <div class="col-auto">
+                                <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+{% endblock %}

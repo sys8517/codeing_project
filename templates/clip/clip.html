@@ -1,0 +1,148 @@
+<!-- 2220312 코드 추가 스크랩 리스트페이지 추가 -->
+
+<style>
+#codeing_card_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <!-- 20220314 수정1 시작 -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script type="text/javascript">
+        /*
+            let msg = document.getElementById("board_id") ;
+            if( msg != null ) {
+                alert( msg );
+            }
+        */
+            function clip_delete(board_id){
+                if(confirm("삭제하시겠습니까?")){
+
+                    $('#board_id').val('');
+                    $('#board_id').val(board_id);
+
+                    data = $('#board_id').val();
+
+                    $.ajax({
+                        type:'POST',
+                        url:'/clip/delete/',
+                        data:JSON.stringify(data),
+                        success:function(json){
+                            console.log(json['result']);
+                            if(json['result'] == 'fail'){
+                                alert('내부 로직 문제.');
+                            }else {
+                                alert('정상적으로 삭제하였습니다.');
+                                location.reload();
+                            }
+
+                        },
+                        error : function(xhr,errmsg,err) {
+                            alert('데이터 오류.');
+                        }
+                    });
+                }
+            }
+
+        </script>
+        <form name="procForm" method="post" >
+            <input type="hidden" id="board_id" name="board_id" />
+            {% if messages %}
+            <input type="hidden" id="msg" name="msg" value="{{ messages }}" />
+            {% endif %}
+        </form>
+        <!-- 20220314 수정1 끝 -->
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                <table class="table">
+                        <thead class="thead-light">
+                        <!-- 20220314 수정2 삭제 추가 -->
+                        <tr class="thead text-center"> <th>번호</th><th>제목</th><th>게시판</th><th>글쓴이</th><th>날짜</th><th>삭제</th></tr>
+                        </thead>
+                        <tbody>
+
+                        {% for o in objs %}
+                        <tr class="text-center">
+                            <td scope="row">
+                                <span>{{ o.board_id }}</span>
+                            </td>
+                            <td>
+                                <a href="/clip/detail/{{ o.board_id }}" >{{o.board_title}}</a>
+                            </td>
+                            <td>
+                                {{o.board}}
+                            </td>
+                            <td>
+                                {{o.user_id}}
+                            </td>
+                            <td>
+                                {{o.board_date | date:'Y-m-d H:i'}}
+                            </td>
+                            <!-- 20220314 수정3 삭제 추가 -->
+                            <td>
+                                <button type="button" id="submit" class="btn btn-danger" onclick="javascript:clip_delete({{ o.board_id }}); return false; " >삭제</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if request.session.sessionid == None %}
+                    {% else %}
+                     {% endif %}
+                    </div>
+                <ul class="pagination justify-content-center">
+<!--                            이전페이지-->
+                    {% if objs.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ objs.previous_page_number }}">
+                            이전
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                            이전
+                        </a>
+                    </li>
+                    {% endif %}
+<!--                            페이지리스트-->
+                    {% for page_number in objs.paginator.page_range %}
+                    {% if page_number >= objs.number|add:-5 and page_number <= objs.number|add:5 %}
+                        {% if page_number == objs.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ page_number }}">
+                                {{ page_number }}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_number }}">
+                                {{ page_number }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+<!--                            다음페이지-->
+                    {% if objs.has_next %}
+                    <li class="page_item">
+                        <a class="page-link" href="?page={{ objs.next_page_number }}">
+                            다음
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                            다음
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+{% endblock %}

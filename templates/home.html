@@ -1,0 +1,126 @@
+<style>
+    li{ list-style-type : none }
+
+</style>
+{% extends 'base.html' %}
+{% block content %}
+
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                    <table class="table" >
+                        <thead style="border-bottom: solid black 1px;">
+                        <tr class="thead"> <th>게시판</th><th>내용</th><th>글쓴이</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="/notice/notice" style="text-decoration : none;">공지사항</a>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_notice %}
+
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_notice %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/info/info"  style="text-decoration : none;">정보게시판</a>
+                            </td>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_info %}
+
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_info %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/free/free"  style="text-decoration : none;">자유게시판</a>
+                            </td>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_free %}
+
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_free %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/qna/qna"  style="text-decoration : none;">질문 게시판</a>
+                            </td>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_qna %}
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_qna %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/study/study"  style="text-decoration : none;">스터디 모임</a>
+                            </td>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_study %}
+
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_study %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="/project/project"  style="text-decoration : none;">프로젝트 모임</a>
+                            </td>
+                            </td>
+                            <td><ul>
+                            {% for o in objs_project %}
+
+                                <li><a href="/clip/detail/{{ o.board_id }}">{{o.board_title}}</a></li>
+
+                            {% endfor %}
+                            </ul></td>
+                            <ul><td>
+                                {% for o in objs_project %}
+                                <li>{{o.user_id}}</li>
+                                {% endfor %}
+                            </td></ul>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </nav>
+        </div>
+{% endblock %}

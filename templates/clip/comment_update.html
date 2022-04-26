@@ -1,0 +1,61 @@
+<!-- 2220312 코드 추가 게시물 상세보기 페이지 추가 -->
+<style>
+
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container">
+                {% csrf_token %}
+                  <!--생략-->
+                  댓글 <br>
+            <div class="form-group row">
+                    <label for="id_inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="on_off" class="form-control" value="{{comment.comment_content}}" id="id_inputContent"  readonly>
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="com_inputuser" class="col-sm-2 col-form-label"><strong>글쓴이</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="on_off" class="form-control" value="{{comment.user.user_id}}" id="com_inputuser"  readonly>
+                    </div>
+            </div>
+
+            <div class="form-group row">
+                    <label for="com_inputDate" class="col-sm-2 col-form-label"><strong>작성일자</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="on_off" class="form-control" value="{{comment.comment_date | date:'Y-m-d H:i' }}" id="com_inputDate" readonly>
+                    </div>
+            </div>
+              <br><br>
+            <div class="form-group row">
+
+              <form action="/clip/comment/u/{{board.board_id}}/{{comment.comment_id}}/"  method="post">
+                {% csrf_token %}
+                <label for="com_upcontent" class="col-sm-2 col-form-label"><strong>수정내용</strong></label>
+                <input name="content" type="text" value="{{comment.comment_content}}" id="com_upcontent" required>
+                  <input type="hidden" name="board_id" value="{{board.board_id}}">
+                <input class="btn btn-success" type="submit" value="저장">
+              </form>
+            </div>
+
+            <div class="row">
+                <div class="col-auto">
+                    {% if board.board == '자유' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/free/free'" value="목록으로">
+                    {% elif board.board == '정보' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/info/info'" value="목록으로">
+                    {% elif board.board == '공지' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/notice/notice'" value="목록으로">
+                    {% elif board.board == '질문' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/qna/qna'" value="목록으로">
+                    {% elif board.board == '스터디' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/study/study'" value="목록으로">
+                    {% elif board.board == '프로젝트' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/project/project'" value="목록으로">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

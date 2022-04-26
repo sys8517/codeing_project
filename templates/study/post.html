@@ -1,0 +1,88 @@
+<style>
+#codeing_study_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+                <div class="container">
+                    <form action="/study/study/p" method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="stu_inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="board_title" maxlength = "50" class="form-control" id="stu_inputTitle" autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2 col-form-label"><strong>게시판</strong></div>
+                            <div class="col-sm-10">
+                                <div class="form-control">스터디 모집</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputWiki" class="col-sm-2 col-form-label"><strong>주제</strong></label>
+                            <div class="col-sm-10">
+                                <input list="title" name="wiki" id="stu_inputWiki">
+                                <datalist id="title" required>
+                                    {% for o in objs %}
+                                    <option value="{{ o }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputNum" class="col-sm-2 col-form-label"><strong>인원수(1~100)</strong></label>
+                            <div class="col-sm-10">
+                                <input type="number" id="stu_inputNum" min="1" max="100" name="board_num" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputPlace" class="col-sm-2 col-form-label"><strong>장소</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" id="stu_inputPlace"  name="board_place" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputRecruit" class="col-sm-2 col-form-label"><strong>모집기간</strong></label>
+                            <div class="col-sm-10">
+                                <input type="datetime-local" id="stu_inputRecruit" name="board_recruitdate" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="stu_inputTime" class="col-sm-2 col-form-label"><strong>모임시간</strong></label>
+                            <div class="col-sm-10">
+                                <input type="datetime-local" id="stu_inputTime"  name="board_time" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="stu_inputOnOff" class="col-sm-2 col-form-label"><strong>온/오프라인</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" id="stu_inputOnOff"  name="board_on_off" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputPhone" class="col-sm-2 col-form-label"><strong>연락처</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" id="stu_inputPhone" name="board_phone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="stu_inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="board_content" class="form-control" id="stu_inputContent" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto mr-auto"></div>
+                            <div class="col-auto">
+                                <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+{% endblock %}

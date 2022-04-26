@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                    <h1>검색 결과</h1>
+                    <table class="table">
+                        <thead class="thead-light">
+                        {% if search_boards %}
+                        <tr class="thead "> <th>번호</th><th>제목</th><th>글쓴이</th><th>날짜</th></tr>
+                        </thead>
+                        {% endif %}
+                        <tbody>
+                        <div id='content'>
+
+
+                        {%if message%}
+                                <b><i>{{message}}</i></b>
+                        {% else %}
+
+                            {% if search_boards %}
+                                {% for post in search_boards %}
+                                 <tr>
+                                    <td>{{post.board_id}}</td>
+                                    <td><a href="/clip/detail/{{ post.board_id }}">{{post.board_title}}</a></td>
+                                    <td>{{post.user_id}}</td>
+                                    <td>{{post.board_date | date:'Y-m-d H:i'}}</td>
+                                 </tr>
+                                {% endfor %}
+
+                            {% elif search_term %}
+                                <b><i>[{{search_term}}] 검색 결과가 없습니다. </i></b>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                        </tbody>
+                    </table>
+                    {% if request.session.sessionid == None %}
+                    {% else %}
+                    <a href="/create" class="btn btn-primary">
+                        글쓰기
+                    </a>
+                     {% endif %}
+                    </div>
+            </nav>
+        </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!-- 2220312 코드 추가 스크랩 등록여부 페이지 -->
+<style>
+#codeing_card_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                    <div style="text-align:center">
+                    {% if suc == 'Y' %}
+                        <h1>글이 정상적으로 스크랩되었습니다.</h1>
+                        <a href="/scrap/scrap">스크랩 게시판으로</a>
+                        <a href="{{ url }}">게시판으로</a>
+                    {% elif suc == 'dup' %}
+                        <h1>이미 스크랩한 게시물입니다.</h1>
+                        <a href="/scrap/scrap">스크랩 게시판으로</a>
+                        <a href="{{ url }}">게시판으로</a>
+                    {% else %}
+                        <h1>로그인이 필요합니다.</h1>
+                        <a href="{{ url }}">로그인</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+{% endblock %}

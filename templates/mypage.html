@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">MY PAGE</h1>
+<div class="container">
+    <nav>
+        <div class="container">
+            <table class="table">
+                <tr class="text-center">
+                    <td scope="row">아이디</td>
+                    <td>{{ user.user_id }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>이름</td>
+                    <td>{{ user.user_name }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>전화번호</td>
+                    <td>{{ user.user_phone }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>선호기업1</td>
+                    <td>{{ user.favcom1 }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>선호기업2</td>
+                    <td>{{ user.favcom2 }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>선호언어1</td>
+                    <td>{{ user.favlang1 }}</td>
+                </tr>
+                <tr class="text-center">
+                    <td>선호언어2</td>
+                    <td>{{ user.favlang2 }}</td>
+                </tr>
+            </table>
+        </div>
+    </nav>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Simple Sidebar - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico'%}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css'%}" rel="stylesheet" />
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light" style="font-weight:bold" ><a href="/" style="color: red; text-decoration : none;">CODEING</a></div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/notice/notice">공지사항</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/info/info">정보 게시판</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/qna/qna">질문 게시판</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/free/free">자유게시판</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/study/study">스터디 모집</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/project/project">프로젝트 모집</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/wiki/wiki" id="codewiki">코드잉위키</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-primary" id="sidebarToggle">메뉴</button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <form action="/search" method="GET">
+                                        <div class="row">
+                                            <div style="float: right;" class="sear">
+                                                <div class="sear">
+                                                    <div class="sear" style="margin-top: 10px;">
+                                                        <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+                                                            <option value="all">전체</option>
+                                                            <option value="title_content">제목+내용</option>
+                                                            <option value="title">제목</option>
+                                                            <option value="content">내용</option>
+                                                            <option value="writer">작성자</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="sear" style="margin-top: 10px;">
+                                                        <input type="text" name="q" value="{{ q }}" class="form-control form-control-md"
+                                                            style="width: 15em;" placeholder="검색어를 입력해주세요.">
+                                                    </div>
+                                                    <div class="sear">
+                                                         <button class="btn btn-md btn-outline-dark" type="submit">검색</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                <li class="nav-item active"><a class="nav-link" href="/">홈으로</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/link">링크</a></li>
+                                {% if request.session.sessionid == None %}
+                                <li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/register">회원가입</a></li>
+                                {% else %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">정보</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#!">회원 정보</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#!">로그아웃</a>
+                                    </div>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container">
+                    <form action="/notice/notice/p" method="post">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="title" class="form-control" id="inputTitle">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputContent" class="col-sm-2 col-form-label"><strong>게시판</strong></label>
+                            <div class="col-sm-10">
+                                <div class="form-control">공지사항</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="content" class="form-control" id="inputContent"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto mr-auto"></div>
+                            <div class="col-auto">
+                                <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

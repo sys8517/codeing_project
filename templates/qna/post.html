@@ -1,0 +1,50 @@
+<style>
+#codeing_qna_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container">
+            <form action="/qna/qna/p" method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="qna_inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="title" class="form-control" maxlength = "50" id="qna_inputTitle" autofocus>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 col-form-label"><strong>게시판</strong></div>
+                    <div class="col-sm-10">
+                        <div class="form-control">질문게시판</div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="qna_inputWiki" class="col-sm-2 col-form-label"><strong>주제</strong></label>
+                    <div class="col-sm-10">
+                        <input list="title" id="qna_inputWiki" name="wiki">
+                        <datalist id="title" required>
+                            {% for o in objs %}
+                            <option value="{{ o }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="qna_inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                    <div class="col-sm-10">
+                        <textarea type="text" name="content" class="form-control" id="qna_inputContent" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto mr-auto"></div>
+                    <div class="col-auto">
+                        <input class="btn btn-primary" type="submit" role="button" value="글쓰기">
+                    </div>
+                </div>
+            </form>
+        </div>
+{% endblock %}

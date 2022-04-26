@@ -1,0 +1,102 @@
+<style>
+#codeing_qna_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+</style>
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container-fluid">
+            <nav>
+                <div class="container">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <!-- 2220312 코드 추가 스크랩추가 -->
+                        <tr class="thead text-center"> <th>번호</th><th>제목</th><th>글쓴이</th><th>날짜</th><th>스크랩</th></tr>
+                        </thead>
+                        <tbody>
+                        {% for o in objs %}
+                        {% if o.board == '질문' %}
+                        <tr class="text-center">
+                            <td scope="row">
+                                <span>{{ o.board_id }}</span>
+                            </td>
+                            <td>
+                                <!-- 2220312 코드 추가 스크랩추가 -->
+                                <a href="/clip/detail/{{ o.board_id }}" >{{o.board_title}}</a>
+                            </td>
+                            <td>
+                                {{o.user_id}}
+                            </td>
+                            <td>
+                                {{o.board_date | date:'Y-m-d H:i'}}
+                            </td>
+                            <!-- 2220312 코드 추가 스크랩추가 -->
+                            <td>
+                                <button type="button" class="btn btn-info" onclick="location.href='/notice/scrap?board_id={{ o.board_id }}&type=free'" >스크랩</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if request.session.sessionid == None %}
+                    {% else %}
+                    <a href="post" class="btn btn-primary">
+                        글쓰기
+                    </a>
+                     {% endif %}
+                    </div>
+                <ul class="pagination justify-content-center">
+<!--                            이전페이지-->
+                    {% if objs.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ objs.previous_page_number }}">
+                            이전
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                            이전
+                        </a>
+                    </li>
+                    {% endif %}
+<!--                            페이지리스트-->
+                    {% for page_number in objs.paginator.page_range %}
+                    {% if page_number >= objs.number|add:-5 and page_number <= objs.number|add:5 %}
+                        {% if page_number == objs.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ page_number }}">
+                                {{ page_number }}
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_number }}">
+                                {{ page_number }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+<!--                            다음페이지-->
+                    {% if objs.has_next %}
+                    <li class="page_item">
+                        <a class="page-link" href="?page={{ objs.next_page_number }}">
+                            다음
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                            다음
+                        </a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+        </div>
+{% endblock %}

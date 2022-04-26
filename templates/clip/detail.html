@@ -1,0 +1,213 @@
+<!-- 2220312 코드 추가 게시물 상세보기 페이지 추가 -->
+<style>
+#comment_box{
+    float:right;
+}
+</style>
+{% extends 'base.html' %}
+{% block content %}
+<style>
+{% if board.board == '자유' %}
+#codeing_free_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% elif board.board == '정보' %}
+#codeing_info_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% elif board.board == '공지' %}
+#codeing_notice_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% elif board.board == '질문' %}
+#codeing_qna_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% elif board.board == '스터디' %}
+#codeing_study_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% elif board.board == '프로젝트' %}
+#codeing_project_nav{
+    background:blue;
+    font-weight:bold;
+    color:white;
+    }
+{% endif %}
+
+</style>
+        <div class="container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>제목</strong></label>
+                    <div class="col-sm-10">
+                        {% if board.board_title %}
+                        <input type="text" name="title" class="form-control" id="inputTitle" value="{{ board.board_title }}" autofocus readonly>
+                        {% endif %}
+                    </div>
+                </div>
+<!--                <div class="form-group row">-->
+<!--                    <label for="inputContent" class="col-sm-2 col-form-label"><strong>게시판</strong></label>-->
+<!--                    <div class="col-sm-10">-->
+<!--                        <div class="form-control">자유게시판</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>주제</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="wiki" class="form-control" id="wiki" value="{{ board.wiki.wiki_title }}"  readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>게시판</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="wiki" class="form-control" id="board" value="{{ board.board }}"  readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {% if board.board_num %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>인원</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="num" class="form-control" id="board_num" value="{{ board.board_num }}"  readonly>
+                    </div>
+                    {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                 <div class="form-group row">
+                     {% if board.board_place %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>장소</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="place" class="form-control" value="{{ board.board_place }}"  readonly>
+                    </div>
+                     {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                <div class="form-group row">
+                    {% if board.board_recruitdate %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>모집기한</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="recruitdate" class="form-control" value="{{ board.board_recruitdate | date:'Y-m-d H:i' }}"  readonly>
+                    </div>
+                    {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                <div class="form-group row">
+                    {% if board.board_time %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>모임시간</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="time" class="form-control" value="{{ board.board_time | date:'Y-m-d H:i' }}"  readonly>
+                    </div>
+                    {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                <div class="form-group row">
+                    {% if board.board_on_off %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>온/오프라인</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="on_off" class="form-control" value="{{ board.board_on_off }}"  readonly>
+                    </div>
+                    {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                <div class="form-group row">
+                    {% if board.board_phone %} <!-- 2220314 코드 수정 -->
+                    <label for="inputTitle" class="col-sm-2 col-form-label"><strong>연락처</strong></label>
+                    <div class="col-sm-10">
+                        <input type="text" name="phone" class="form-control" value="{{ board.board_phone }}"  readonly>
+                    </div>
+                    {% endif %} <!-- 2220314 코드 수정 -->
+                </div>
+                <div class="form-group row">
+                    <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="content" id="inputContent" readonly cols="30" rows="15">{{ board.board_content }} </textarea>
+                    </div>
+                </div>
+                {% if request.session.sessionid == board.user.user_id %}
+                    {% if board.board == '자유' %}
+                        <div class="container">
+                            <a class="btn btn-primary" href="/free/uv/{{board.board_id}}">수정</a>
+                            <a class="btn btn-primary" href="/free/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% elif board.board == '공지' %}
+                         <div class="container">
+                             <a class="btn btn-primary" href="/notice/uv/{{board.board_id}}">수정</a>
+                             <a class="btn btn-primary" href="/notice/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% elif board.board == '질문' %}
+                         <div class="container">
+                             <a class="btn btn-primary" href="/qna/uv/{{board.board_id}}">수정</a>
+                             <a class="btn btn-primary" href="/qna/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% elif board.board == '정보' %}
+                         <div class="container">
+                             <a class="btn btn-primary" href="/info/uv/{{board.board_id}}">수정</a>
+                             <a class="btn btn-primary" href="/info/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% elif board.board == '스터디' %}
+                         <div class="container">
+                             <a class="btn btn-primary" href="/study/uv/{{board.board_id}}">수정</a>
+                             <a class="btn btn-primary" href="/study/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% elif board.board == '프로젝트' %}
+                         <div class="container">
+                             <a class="btn btn-primary" href="/project/uv/{{board.board_id}}">수정</a>
+                             <a class="btn btn-primary" href="/project/d/{{board.board_id}}">삭제</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                    <!-- 220315 코드 추가 - 댓글 목록 / 작성  -->
+                <br>
+                    <strong>댓글</strong> <br>
+                  {% for comment in objs %}
+
+                    <div class="comment form-control" style="padding: 3px 6px; margin:1px;">
+                        {{comment.comment_content}}
+                        <div id="comment_box" >
+                          작성자:{{comment.user.user_id}} - 작성일:{{comment.comment_date | date:'Y-m-d H:i' }}
+                         {% if request.session.sessionid == comment.user.user_id %}
+                        <a href="/clip/comment/uv/{{board.board_id}}/{{comment.comment_id}}">수정</a>  <a href="/clip/comment/d/{{board.board_id}}/{{comment.comment_id}}">삭제</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                  {% endfor %}
+
+            </form>
+                  <br><br>
+                  댓글 달기 :
+                  <form action="/clip/comment/{{board.board_id}}"   method="post">
+                    {% csrf_token %}
+                    <input name="content" class="form-control" type="text" value=""required>
+                      <input type="hidden" name="board_id" value="{{board.board_id}}">
+                    <input class="btn btn-success" type="submit" value="작성">
+                  </form>
+            {% if center != None %}
+                {% include center %}
+            {% else %}
+                <section></section>
+            {% endif %}
+            <div class="row">
+                <div class="col-auto">
+                    {% if board.board == '자유' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/free/free'" value="목록으로">
+                    {% elif board.board == '정보' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/info/info'" value="목록으로">
+                    {% elif board.board == '공지' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/notice/notice'" value="목록으로">
+                    {% elif board.board == '질문' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/qna/qna'" value="목록으로">
+                    {% elif board.board == '스터디' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/study/study'" value="목록으로">
+                    {% elif board.board == '프로젝트' %}
+                    <input class="btn btn-primary" type="button" role="button" onclick="location.href='/project/project'" value="목록으로">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
